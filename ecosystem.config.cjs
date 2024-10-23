@@ -3,7 +3,7 @@ module.exports = {
 		{
 			name: 'API NOTIFY CHALLENGE',
 			script: './src/index.js',
-			instances: 1,
+			interpreter: '/root/.nvm/versions/node/v20.18.0/bin/node',
 			env: {
 				NODE_ENV: 'production',
 				HOST: '0.0.0.0',

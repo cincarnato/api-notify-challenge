@@ -1,22 +1,18 @@
 #!/bin/sh
 echo "DEPLOY: START"
+nvm use 20
 
 echo "DEPLOY: git checkout and pull"
 git checkout .
-git pull
-
-
-echo "DEPLOY: building"
-sh build.sh
-
+git pull origin master
 
 echo "DEPLOY: Build install dependencies"
 
-cd out
-npm install --production
-cd ..
+npm install
 
-echo "DEPLOY: Copy runpm2.sh"
-sh runpm2.sh
+nvm use 14
+echo "DEPLOY: Start PM2"
+pm2 stop stop ecosystem.config.cjs
+pm2 start ecosystem.config.cjs --update-env
 
 echo "DEPLOY: END"

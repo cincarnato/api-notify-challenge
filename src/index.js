@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import {getContact} from './contacts.js';
-
+import {randomUUID} from 'node:crypto'
 
 const fastifyServer = fastify({logger: true});
 
@@ -31,7 +31,7 @@ fastifyServer.post('/api/notify/:type', async (request, reply) => {
 
     const {type} = request.params;
 
-    if(!['email','sms'].includes(type)) {
+    if (!['email', 'sms'].includes(type)) {
         reply.status(400).send({error: 'Invalid notification type. Type should be either email or sms.'});
         return;
     }
@@ -39,36 +39,45 @@ fastifyServer.post('/api/notify/:type', async (request, reply) => {
     const {destination, message} = request.body;
 
 
-
-
-    if(!destination) {
-        reply.status(400).send({error: 'Missing destination'});
+    if (!destination) {
+        reply.status(400).send({error: 'Missing destination.'});
         return;
     }
 
-    if(!message) {
-        reply.status(400).send({error: 'Missing message'});
+    if (!message) {
+        reply.status(400).send({error: 'Missing message.'});
         return;
     }
 
-    if(type === 'sms' && message.length > 160) {
-        reply.status(400).send({error: 'SMS message should not exceed 160 characters'});
-        return;
-    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(type === 'email' && !emailRegex.test(destination)) {
-        reply.status(400).send({error: 'Invalid email address'});
+    if (type === 'email' && !emailRegex.test(destination)) {
+        reply.status(400).send({error: 'Invalid email address.'});
         return;
     }
 
+    const smsRegex = /^[0-9]{10,13}$/
+    if(type === 'sms' && !smsRegex.test(destination)) {
+        reply.status(400).send({error: 'Invalid phone number. Destination should be a valid 10-13 digit number.'});
+        return;
+    }
+
+    if (type === 'sms' && message.length > 160) {
+        reply.status(400).send({error: 'SMS message should not exceed 160 characters.'});
+        return;
+    }
+
+
     const randomNumber = Math.floor(Math.random() * 100);
-    if(randomNumber > 80) {
+    const successRate = parseInt(process.env.SUCCESS_RATE) || 90; // 100% success rate by default
+    if (randomNumber > successRate) {
         reply.status(500).send({error: 'Failed to send notification. Try again later.'});
         return;
     }
 
-    reply.send({status: 'Notification sent', destination, message});
+    const uuid = randomUUID()
+
+    reply.send({status: 'sent', id: uuid});
 })
 
 const port = process.env.PORT || 7070;

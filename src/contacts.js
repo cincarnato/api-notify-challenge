@@ -10,7 +10,7 @@ const contacts = [
     { "id": "9", "name": "Laura", "surname": "Thomas", "phoneNumber": "12345678909", "email": "laura.thomas@example.com" },
     { "id": "10", "name": "Robert", "surname": "Taylor", "phoneNumber": "12345678910", "email": "robert.taylor@example.com" },
     { "id": "11", "name": "Susan", "surname": "Moore", "phoneNumber": "12345678911", "email": "susan.moore@example.com" },
-    { "id": "12", "name": "James", "surname": "Jackson", "phoneNumber": "12345678912", "email": "james.jackson@example.com" },
+    { "id": "12", "name": "James", "surname": "Jackson", "phoneNumber": "12345678912", "email": "james.jackson" },
     { "id": "13", "name": "Sarah", "surname": "White", "phoneNumber": "12345678913", "email": "sarah.white@example.com" },
     { "id": "14", "name": "Mark", "surname": "Harris", "phoneNumber": "12345678914", "email": "mark.harris@example.com" },
     { "id": "15", "name": "Lisa", "surname": "Martin", "phoneNumber": "12345678915", "email": "lisa.martin@example.com" },

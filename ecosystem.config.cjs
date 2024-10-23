@@ -9,7 +9,8 @@ module.exports = {
 				HOST: '0.0.0.0',
 				PORT: '9090',
 				SUCCESS_RATE: '90',
-				MAX_TIMEOUT: '1000'
+				MAX_CONTACT_TIMEOUT: '1000',
+				MAX_NOTIFY_TIMEOUT: '500'
 			}
 		}
 

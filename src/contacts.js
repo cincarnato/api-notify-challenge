@@ -1,3 +1,5 @@
+import {randomSleep} from "./sleep.js";
+
 const contacts = [
     { "id": "1", "name": "John", "surname": "Doe", "phoneNumber": "12345678901", "email": "john.doe@example.com" },
     { "id": "2", "name": "Jane", "surname": "Smith", "phoneNumber": "12345678902", "email": "jane.smith@example.com" },
@@ -46,16 +48,13 @@ const contacts = [
     { "id": "45", "name": "Elijah", "surname": "Collins", "phoneNumber": "12345678945", "email": "elijah.collins@example.com" }
 ]
 
-const randomTimeout = (maxTimeout) => {
-    return Math.floor(Math.random() * maxTimeout)
-}
 
-const maxTimeout = parseInt(process.env.MAX_TIMEOUT) || 1000
 
-const getContact = (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(contacts.find(contact => contact.id === id)), randomTimeout(maxTimeout))
-    })
+const maxTimeout = parseInt(process.env.MAX_CONTACT_TIMEOUT) || 1000
+
+const getContact = async (id) => {
+    await randomSleep(maxTimeout)
+    return contacts.find(contact => contact.id === id)
 }
 
 export default getContact

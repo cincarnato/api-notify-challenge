@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import {getContact} from './contacts.js';
 import {randomUUID} from 'node:crypto'
+import sleep, {randomSleep} from "./sleep.js";
 
 const fastifyServer = fastify({logger: true});
 
@@ -77,6 +78,8 @@ fastifyServer.post('/api/notify/:type', async (request, reply) => {
 
     const uuid = randomUUID()
 
+    const maxTimeout = parseInt(process.env.MAX_NOTIFY_TIMEOUT) || 500
+    await randomSleep(maxTimeout)
     reply.send({status: 'sent', id: uuid});
 })
 
